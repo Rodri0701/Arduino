@@ -1,0 +1,55 @@
+/*Se declaran las entrasdas y salidas que tendra la arduino  */
+const int button1 = 2; /* Entada A*/
+const int button2 = 4;/* Entrada B */
+const int salida = 13; /* Acarreo */
+const int salida2 = 8; /* Salida normal */
+const int controlador = 7; /* Controlador */
+int EstadoBotton=0;
+int EstadoButton2=0;
+int EstadoButton3 =0;
+void setup() {
+  /* configura parte de hw */
+  // put your setup code here, to run once: además del código se ponen entradas y salidas
+pinMode (salida, OUTPUT);
+pinMode (button1, INPUT);
+pinMode (button2, INPUT);
+pinMode (controlador, INPUT);
+pinMode (salida2, OUTPUT);
+}
+
+void loop() {
+  /* Sirve para las operaciones */
+  /* Se lee primero el estado del botón */
+  EstadoBotton = digitalRead(button1);
+  EstadoButton2 = digitalRead(button2);
+  EstadoButton3 = digitalRead(controlador);
+
+
+if (EstadoButton3 == LOW){  
+
+if (EstadoBotton == HIGH & EstadoButton2 == HIGH){ /* If condiconal SUMA*/
+digitalWrite(salida, HIGH);
+digitalWrite(salida2, LOW);
+}/* Fin del primer if condicional */
+ else if (EstadoBotton == HIGH | EstadoButton2 == HIGH){
+digitalWrite(salida, LOW);
+digitalWrite(salida2,HIGH);
+} /* FIn del else if */
+else{ /* Else del else if  */ 
+digitalWrite(salida2, LOW);
+} /* fin del else del else if */
+
+}
+else {/* Else del if del controlador RESTA */
+
+ if (EstadoBotton== HIGH & EstadoButton2 == LOW ){ /* Resta 1-0 */
+   digitalWrite(salida2, HIGH);
+ }
+ 
+else if (EstadoBotton == LOW & EstadoButton2 == HIGH) {/* Inicion del else if de Resta */
+digitalWrite(salida2, HIGH);
+digitalWrite(salida, HIGH);
+}/* Fin del else if de la RESTA */
+digitalWrite(salida2, LOW);
+} /* Fin del else controlador RESTA */
+} /* Cierre metodo */
