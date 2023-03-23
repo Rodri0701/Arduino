@@ -1,0 +1,395 @@
+/* Entradas a la Arduino */
+const int Entrada_A = 2; /* Entrada A */
+const int Entrada_B = 3; /* Entrada B */
+const int Entrada_C = 4; /* Entrada C */
+const int Entrada_D = 5; /* Entrada D */
+const int Salida1 = 6; /* Salida1 */
+const int Salida2 = 7; /* Salida2 */ 
+const int Salida3 = 13; /* Salida3 */
+const int Salida4 = 11; /* Salida4 */
+const int Salida5 = 1; /* Error */
+const int Salida6 = 0; /* Salida extra */
+const int Controlador1 = 8; /* Controlador1 */
+const int Controlador2 = 9; /* Controlador 2*/ 
+const int Controlador3 = 10; /* Controlador 3*/
+int EstadoEntradaA=0; /* Convertir a digital */
+int EstadoEntradaB=0; /* Convertir a digital */
+int EstadoEntradaC=0; /* Convertir a digital */
+int EstadoEntradaD=0; /* Convertir a digital */
+int EstadoControlador1=0; /* Convertir a digital */ /* 001 */
+int EstadoControlador2=0; /* Convertir a digital */ /* 010 */
+int EstadoControlador3=0; /* Convertir a digital */ /* 100 */
+void setup() {
+  pinMode(Entrada_A, INPUT);
+  pinMode(Entrada_B, INPUT);
+  pinMode(Entrada_C, INPUT);
+  pinMode(Entrada_D, INPUT);
+  pinMode(Controlador1, INPUT);
+  pinMode(Controlador2, INPUT);
+  pinMode(Controlador3, INPUT);
+  pinMode(Salida1, OUTPUT);
+  pinMode(Salida2, OUTPUT);
+  pinMode(Salida3, OUTPUT);
+  pinMode(Salida4, OUTPUT);
+  pinMode(Salida5, OUTPUT);
+  pinMode(Salida6, OUTPUT);
+  // put your setup code here, to run once:
+
+}
+
+void loop() {
+  EstadoEntradaA = digitalRead(Entrada_A);
+  EstadoEntradaB = digitalRead(Entrada_B);
+  EstadoEntradaC = digitalRead(Entrada_C);
+  EstadoEntradaD = digitalRead(Entrada_D);
+  EstadoControlador1 = digitalRead(Controlador1);
+  EstadoControlador2 = digitalRead(Controlador2);
+  EstadoControlador3 = digitalRead(Controlador3);
+
+/* operacion 000 */
+if (EstadoControlador1 == LOW & EstadoControlador2 == LOW & EstadoControlador3 == LOW){
+  
+    
+     if ( EstadoEntradaA == HIGH & EstadoEntradaB == LOW & EstadoEntradaC == LOW & EstadoEntradaD == LOW){
+    digitalWrite(Salida1, HIGH);  
+     }/* Suma 1+0+0+0 */
+     else{
+      digitalWrite(Salida1, LOW); 
+     }
+        if (EstadoEntradaA == LOW & EstadoEntradaB == HIGH & EstadoEntradaC == LOW & EstadoEntradaD == LOW){
+          digitalWrite(Salida1, HIGH);
+  } /* Suma 0+1+0+0 */
+  else {
+    digitalWrite(Salida1,LOW);
+  }
+    if (EstadoEntradaA == LOW & EstadoEntradaB == LOW & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+      digitalWrite(Salida1, HIGH);
+    } /* Suma 0+0+1+0*/
+    else {
+      digitalWrite(Salida1, LOW);
+    }
+      if (EstadoEntradaA == LOW & EstadoEntradaB == LOW & EstadoEntradaC == LOW & EstadoEntradaD == HIGH){
+    digitalWrite(Salida1, HIGH);  
+    } /* 0+0+0+1 */
+      else{
+        digitalWrite(Salida1, LOW);
+      }    
+    if (EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == LOW & EstadoEntradaD == LOW){
+      digitalWrite(Salida2, HIGH); /* Suma 1+1+0+0 */
+    }
+    else{
+      digitalWrite(Salida2, LOW);
+    }
+    if (EstadoEntradaA == LOW & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+      digitalWrite(Salida1, HIGH);
+      digitalWrite(Salida2, HIGH);
+    }/* Operacion 0+1+1+0 */
+    else{
+      digitalWrite(Salida1, LOW);
+      digitalWrite(Salida2, LOW);      
+    }
+    if (EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+      digitalWrite(Salida4, HIGH);
+      }/* Suma 1+1+1+0 */
+      else {
+        digitalWrite(Salida4, LOW);        
+      }
+      if (EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){
+        digitalWrite(Salida4, HIGH);
+        digitalWrite(Salida2, HIGH);
+      }/* Suma 1+1+1+1 */
+      else{
+        digitalWrite(Salida4, LOW);
+        digitalWrite(Salida2, LOW);
+      }
+} /* llave de la operacion 000 */
+
+else if (EstadoControlador1 == LOW & EstadoControlador2 == LOW & EstadoControlador3 == HIGH)/* Opereacion resta 001 */{ 
+
+ 
+  
+    if (EstadoEntradaA == HIGH & EstadoEntradaB == LOW & EstadoEntradaC == LOW & EstadoEntradaD == LOW){
+      digitalWrite(Salida1, HIGH);
+    } /* Resta 1-0-0-0 */
+    else {
+      digitalWrite(Salida1, LOW);
+    }
+    if (EstadoEntradaA == LOW & EstadoEntradaB == HIGH & EstadoEntradaC == LOW & EstadoEntradaD == LOW){
+ digitalWrite(Salida2, HIGH);
+ digitalWrite(Salida3, HIGH);
+    }/* resta0-1-0-0 */
+    else{
+      digitalWrite(Salida2, LOW);
+ digitalWrite(Salida3, LOW);
+    }
+
+    if (EstadoEntradaA == LOW & EstadoEntradaB == LOW & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+      digitalWrite(Salida2, HIGH);
+    }/* resta 0-0-1-0 */
+    else{
+      digitalWrite(Salida2, LOW);
+    }
+    if (EstadoEntradaA == LOW & EstadoEntradaB == LOW & EstadoEntradaC == LOW & EstadoEntradaD == HIGH){
+      digitalWrite(Salida4, HIGH);
+      digitalWrite(Salida3, HIGH);
+    }/* Resta 0-0-0-1 */
+    else {
+      digitalWrite(Salida3, LOW);
+      digitalWrite(Salida4, LOW);
+    } 
+    if(EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+      digitalWrite(Salida2, HIGH);
+    }else{
+      digitalWrite(Salida2, LOW);
+    }
+    if(EstadoEntradaA == HIGH & EstadoEntradaB == LOW & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){
+      digitalWrite(Salida1, HIGH);
+    } 
+    else{
+      digitalWrite(Salida1, LOW);
+    }   
+    if(EstadoEntradaA == HIGH & EstadoEntradaB == LOW & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+      digitalWrite(Salida1, HIGH);
+      digitalWrite(Salida2, HIGH);
+    }else{
+      digitalWrite(Salida1, LOW);
+      digitalWrite(Salida2, LOW);
+    }
+    if(EstadoEntradaA == LOW & EstadoEntradaB == HIGH & EstadoEntradaC == LOW & EstadoEntradaD == HIGH){
+      digitalWrite(Salida4, HIGH);
+      digitalWrite(Salida3, HIGH);
+    }else {
+      digitalWrite(Salida4, LOW);
+      digitalWrite(Salida3, LOW);
+    }
+  }/* operacion 001 */
+
+  else if (EstadoControlador1 == LOW & EstadoControlador2 == HIGH & EstadoControlador3 == LOW){ /* 010 */
+
+    if(EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == LOW & EstadoEntradaD == LOW){
+      digitalWrite(Salida1, HIGH);      
+    }else{
+      digitalWrite(Salida1, LOW);
+    } /* Operacion 1*1*0*0 */
+    if (EstadoEntradaA == HIGH & EstadoEntradaB == LOW & EstadoEntradaC == LOW & EstadoEntradaD == HIGH){
+      digitalWrite(Salida2, HIGH);
+    }else{
+      digitalWrite(Salida2, LOW);
+    } /* Operacion 1*0*0*1 */
+    if (EstadoEntradaA == LOW & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+      digitalWrite(Salida2, HIGH);      
+    }else{
+      digitalWrite(Salida2, LOW);
+    } /* Operacion 0*1*1*0 */
+    if (EstadoEntradaA == LOW & EstadoEntradaB == LOW & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){
+      digitalWrite(Salida4, HIGH);
+    }else{
+      digitalWrite(Salida4, LOW);
+    } /* Operacion 0*0*1*1 */
+    if(EstadoEntradaA == LOW & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){
+      digitalWrite(Salida4, HIGH);
+      digitalWrite(Salida2, HIGH);
+    }else{
+      digitalWrite(Salida4, LOW);
+      digitalWrite(Salida2, LOW);
+    } /* Operacion 0*1*1*1 */
+    if (EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+      digitalWrite(Salida1, HIGH);
+      digitalWrite(Salida2, HIGH);
+    }else{
+      digitalWrite(Salida1, LOW);
+      digitalWrite(Salida2, LOW);
+    } /* Operacion 1*1*1*0 */
+
+if (EstadoEntradaA == HIGH & EstadoEntradaB == LOW & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){ 
+    digitalWrite(Salida2, HIGH);
+    digitalWrite(Salida4, HIGH);
+} else{
+    digitalWrite(Salida2, LOW);
+    digitalWrite(Salida4, LOW);
+}   /* Operacion 1*0*1*1 */
+
+    if (EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){ 
+      digitalWrite(Salida3, HIGH);
+      digitalWrite(Salida1, HIGH);
+    }/* Operacion 1*1*1*1 */
+    else {
+      digitalWrite(Salida3, LOW);
+      digitalWrite(Salida1, LOW);
+    }
+  }/* Operacion 010 */
+
+  else if (EstadoControlador1 == LOW & EstadoControlador2 == HIGH & EstadoControlador3 == HIGH){ /* 011*/
+
+        if(EstadoEntradaA == HIGH & EstadoEntradaB == LOW & EstadoEntradaC == LOW & EstadoEntradaD == LOW){
+          digitalWrite(Salida5, HIGH); /* Acarreo de Error.*/
+        }/* operacion 01/00 */
+        else {
+          digitalWrite(Salida5, LOW);
+        }
+        if (EstadoEntradaA == LOW & EstadoEntradaB == LOW & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+          digitalWrite(Salida5, HIGH); /* Acarreo de Error.*/
+        }/* Operacion 00/10 */
+        else{
+          digitalWrite(Salida5, LOW);
+        }/* Operacion 10/00 */
+
+        if (EstadoEntradaA == LOW & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+          digitalWrite(Salida2, HIGH); 
+        }/* Operacion 10/10 */
+        else{
+          digitalWrite(Salida2, LOW);
+        }
+        if (EstadoEntradaA == HIGH & EstadoEntradaB == LOW & EstadoEntradaC == LOW & EstadoEntradaD == HIGH){
+          digitalWrite(Salida2, HIGH); 
+        }/* Operacion 01/01 */
+        else{
+          digitalWrite(Salida2, LOW);
+        }
+         if(EstadoEntradaA == LOW & EstadoEntradaB == LOW & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){
+           digitalWrite(Salida1, HIGH);
+         } else{
+           digitalWrite(Salida1, LOW);
+         } 
+         if(EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+           digitalWrite(Salida2, HIGH);
+         } else {
+           digitalWrite(Salida2, LOW);
+         }
+         if(EstadoEntradaA == HIGH & EstadoEntradaB == LOW & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){
+           digitalWrite(Salida1, HIGH);
+         }else{
+           digitalWrite(Salida1, LOW);
+         }
+        if (EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){
+          digitalWrite(Salida2, HIGH);
+         
+        }/* Operacion 11/11 */
+        else{
+          digitalWrite(Salida2, LOW);
+        }
+  }/* Operacion 011 Div */
+ 
+  else if (EstadoControlador1 == HIGH & EstadoControlador2 == LOW & EstadoControlador3 == LOW){ /* 100 */
+    
+    if(EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == LOW & EstadoEntradaD == LOW){
+      digitalWrite(Salida1, HIGH);      
+    }else{
+      digitalWrite(Salida1, LOW);
+    } /* Operacion 1*1*0*0 */
+    if (EstadoEntradaA == HIGH & EstadoEntradaB == LOW & EstadoEntradaC == LOW & EstadoEntradaD == HIGH){
+      digitalWrite(Salida2, HIGH);
+    }else{
+      digitalWrite(Salida2, LOW);
+    } /* Operacion 1*0*0*1 */
+    if (EstadoEntradaA == LOW & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+      digitalWrite(Salida2, HIGH);      
+    }else{
+      digitalWrite(Salida2, LOW);
+    } /* Operacion 0*1*1*0 */
+    if (EstadoEntradaA == LOW & EstadoEntradaB == LOW & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){
+      digitalWrite(Salida4, HIGH);
+    }else{
+      digitalWrite(Salida4, LOW);
+    } /* Operacion 0*0*1*1 */
+    if(EstadoEntradaA == LOW & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){
+      digitalWrite(Salida4, HIGH);
+      digitalWrite(Salida2, HIGH);
+    }else{
+      digitalWrite(Salida4, LOW);
+      digitalWrite(Salida2, LOW);
+    } /* Operacion 0*1*1*1 */
+    if (EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == LOW){
+      digitalWrite(Salida1, HIGH);
+      digitalWrite(Salida2, HIGH);
+    }else{
+      digitalWrite(Salida1, LOW);
+      digitalWrite(Salida2, LOW);
+    } /* Operacion 1*1*1*0 */
+    if (EstadoEntradaA == HIGH & EstadoEntradaB == LOW & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){
+    digitalWrite(Salida2, HIGH);
+    digitalWrite(Salida4, HIGH);
+    } else{
+    digitalWrite(Salida2, LOW);
+    digitalWrite(Salida4, LOW);
+    }   /* Operacion 1*0*1*1 */
+
+    if (EstadoEntradaA == HIGH & EstadoEntradaB == HIGH & EstadoEntradaC == HIGH & EstadoEntradaD == HIGH){ 
+      digitalWrite(Salida3, HIGH);
+      digitalWrite(Salida1, HIGH);
+    }/* Operacion 1*1*1*1 */
+    else {
+      digitalWrite(Salida3, LOW);
+      digitalWrite(Salida1, LOW);
+    }
+
+
+  }/* Operacion 100 AND */
+
+  else if (EstadoControlador1 == HIGH & EstadoControlador2 == LOW & EstadoControlador3 == HIGH){ /* 101 */
+  
+    if (EstadoEntradaA == HIGH | EstadoEntradaB == LOW | EstadoEntradaC == LOW | EstadoEntradaD == LOW){
+      digitalWrite(Salida1, HIGH);
+    }/* Operacion 1 or 0 or 0 or 0 */
+    if(EstadoEntradaA == LOW | EstadoEntradaB == HIGH | EstadoEntradaC == LOW | EstadoEntradaD == LOW){
+      digitalWrite(Salida1, HIGH);      
+    } /* Operacion 0 or 1 or 0 or 0 */
+    if (EstadoEntradaA == LOW | EstadoEntradaB == LOW | EstadoEntradaC == HIGH | EstadoEntradaD == LOW){
+      digitalWrite(Salida1,HIGH);
+    }/* Operacion 0 or 0 or 1 or 0 */
+    if (EstadoEntradaA == LOW | EstadoEntradaB == LOW | EstadoEntradaC == LOW | EstadoEntradaD == HIGH){
+      digitalWrite(Salida1,HIGH);
+    }/* Operacion 0 or 0 or 0 or 1*/
+
+  }/* Operacion 101 OR  */
+
+  else if (EstadoControlador1 == HIGH & EstadoControlador2 == HIGH & EstadoControlador3 == LOW){ /* 110 */
+    if (EstadoEntradaC ^ EstadoEntradaD){
+      digitalWrite(Salida1, HIGH);
+      digitalWrite(Salida2, LOW);
+    }else{
+      digitalWrite(Salida1, LOW);
+      digitalWrite(Salida2, HIGH);
+    }
+    if (EstadoEntradaA ^ EstadoEntradaB){
+      digitalWrite(Salida1, HIGH);
+      digitalWrite(Salida2, LOW);
+    }else {
+      digitalWrite(Salida1, LOW);
+      digitalWrite(Salida2, HIGH);
+    }
+  
+    }/* Operacion 110  XOR */
+
+  else if (EstadoControlador1 == HIGH & EstadoControlador2 == HIGH & EstadoControlador3 == HIGH){
+    if(!EstadoEntradaA == HIGH){
+      digitalWrite(Salida1, HIGH);  
+      digitalWrite(Salida2,LOW);    
+    }
+    else{
+      digitalWrite(Salida1, LOW);      
+    }
+    if(!EstadoEntradaB == HIGH){
+      digitalWrite(Salida1, HIGH);  
+      digitalWrite(Salida2,LOW);    
+    }
+    else{
+      digitalWrite(Salida1, LOW);      
+    }
+    if(!EstadoEntradaC == HIGH){
+      digitalWrite(Salida1, HIGH);  
+      digitalWrite(Salida2,LOW);    
+    }
+    else{
+      digitalWrite(Salida1, LOW);      
+    }
+    if(!EstadoEntradaD == HIGH){
+      digitalWrite(Salida1, HIGH);  
+      digitalWrite(Salida2,LOW);    
+    }
+    else{
+      digitalWrite(Salida1, LOW);      
+    }
+  }/* Operacion 111 NOT */
+
+}/* Llave loop */
