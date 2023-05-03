@@ -1,2 +1,2 @@
 # Arduino
-Practicas usando Arduino
+Prácticas usando Arduino
