@@ -1,0 +1,42 @@
+void setup() {
+  Serial.begin(9600);  // Iniciar comunicación serial
+}
+
+void loop() {
+  // Leer la palabra desde el usuario
+  Serial.println("Ingresa una palabra: ");
+  while (!Serial.available()) {}  // Esperar hasta que haya datos disponibles
+  String palabra = Serial.readString();
+
+  // Cifrado XOR
+  String clave = "clave-secreta";  // Clave para el cifrado
+  String palabraCifrada = xorCifrado(palabra, clave);
+
+  // Mostrar el resultado cifrado en binario
+  Serial.print("Palabra cifrada en binario: ");
+  for (int i = 0; i < palabraCifrada.length(); i++) {
+    Serial.print(palabraCifrada[i], BIN);
+    Serial.print(" ");
+  }
+  Serial.println();
+
+  // Decifrado XOR
+  String palabraDecifrada = xorCifrado(palabraCifrada, clave);
+
+  // Mostrar el resultado decifrado
+  Serial.print("Palabra decifrada: ");
+  Serial.println(palabraDecifrada);
+
+  delay(1000);  // Esperar un segundo antes de repetir el bucle
+}
+
+String xorCifrado(const String palabra, const String clave) {
+  String resultado;
+  for (int i = 0; i < palabra.length(); i++) {
+    char caracter = palabra.charAt(i);
+    char claveCaracter = clave.charAt(i % clave.length());
+    char caracterCifrado = caracter ^ claveCaracter;  // Operación XOR
+    resultado += caracterCifrado;
+  }
+  return resultado;
+}
